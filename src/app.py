@@ -50,6 +50,17 @@ def get_all_people():
     result = [element.serialize() for element in all_people]
     return jsonify(result), 200
 
+@app.route('/people/<int:id>', methods=['GET'])
+def get_one_person(id):
+
+
+    #Aquí cambia la petición y solicitamos sólo una persona por el ID que hemos definido en el Endpoint de arriba (@app.route('/people/<int:id>')
+    person = People.query.get(id)
+    if person:
+        return jsonify(person.serialize()), 200
+    else:
+        return jsonify({"message": "Person not found"}), 404
+
 @app.route('/people', methods=['POST'])
 def post_people():
 
@@ -68,11 +79,23 @@ def post_people():
     response_body = {"msg": "Person inserted successfully"}
     return jsonify(response_body), 200
 
+
 @app.route('/planet', methods=['GET'])
 def get_planets():
     allPlanets = Planet.query.all()
     result = [element.serialize() for element in allPlanets]
     return jsonify(result), 200
+
+@app.route('/planet/<int:id>', methods=['GET'])
+def get_one_planet(id):
+
+
+    #Aquí cambia la petición y solicitamos sólo una planeta por el ID que hemos definido en el Endpoint de arriba (@app.route('/planet/<int:id>')
+    planet = Planet.query.get(id)
+    if planet:
+        return jsonify(planet.serialize()), 200
+    else:
+        return jsonify({"message": "Planet not found"}), 404
 
 @app.route('/planet', methods=['POST'])
 def post_planet():
